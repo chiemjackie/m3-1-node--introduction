@@ -14,7 +14,7 @@ const updateConversation = (message) => {
   messageElem.classList.add('message', author);
   messageElem.innerHTML = `<span>${text}</span>`;
   conversationElem.appendChild(messageElem);
-  conversationElem.scrollTop = conversationElem.scrollHeight;
+  conversationElem.scrollTop   = conversationElem.scrollHeight;
 
   if (author === 'user') messageInput.value = '';
   handleFocus();
@@ -22,11 +22,11 @@ const updateConversation = (message) => {
 
 const sendMessage = (event) => {
   event.preventDefault();
-
-  const message = { author: 'user', text: messageInput.value };
+  const messageText = messageInput.value;
+  const message = { author: 'user', text: messageText };
   updateConversation(message);
 
-  fetch('/parrot-message')
+  fetch(`/parrot-message/?message=${messageText}`)
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
